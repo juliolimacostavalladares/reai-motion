@@ -11,7 +11,7 @@ env:
   TURBO_NO_UPDATE_NOTIFIER: 1
 jobs:
   lambda-tests:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: Lambda integration
     steps:
       - uses: actions/checkout@v6
@@ -37,7 +37,7 @@ jobs:
         run: |
           cd packages/lambda && bunx remotion browser ensure && bun test src/test/integration --run
   nextjs-tests:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: Next.js SSR build
     steps:
       - uses: actions/checkout@v6
@@ -59,7 +59,7 @@ jobs:
         run: |
           cd packages/player-example && bun run build-site
   browser-tests:
-    runs-on: macos-latest
+    runs-on: self-hosted
     name: Browser tests
     steps:
       - uses: actions/checkout@v6
@@ -84,7 +84,7 @@ jobs:
         run: |
           bun run teste2e
   webrenderer-tests:
-    runs-on: macos-latest
+    runs-on: self-hosted
     name: Web renderer tests
     steps:
       - uses: actions/checkout@v6
@@ -104,7 +104,7 @@ jobs:
         run: |
           bun run testwebrenderer
   ssr-tests:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: SSR + Monorepo checks
     steps:
       - uses: actions/checkout@v6
@@ -139,7 +139,7 @@ jobs:
         run: |
           cd packages/it-tests && bun test src/monorepo --run --timeout 40000
   template-tests-check:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: Template tests precheck
     outputs:
       should_run: ${{ steps.check.outputs.should_run }}
@@ -175,7 +175,7 @@ jobs:
     name: Template integration on ${{ matrix.os }}
     needs: template-tests-check
     if: needs.template-tests-check.outputs.should_run == 'true'
-    runs-on: ${{ matrix.os }}
+    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
@@ -210,7 +210,7 @@ jobs:
         run: |
           bun run testtemplates
   lint:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     name: Linting + Formatting
     steps:
       - uses: actions/checkout@v6
@@ -230,9 +230,15 @@ jobs:
         timeout-minutes: 10
         run: |
           bun run stylecheck
+      - name: Lint AI Video Studio
+        run: bun run lint --filter='@remotion/ai-video-studio'
+      - name: Test AI Video Studio
+        run: bun run test --filter='@remotion/ai-video-studio'
+      - name: Build AI Video Studio
+        run: bun run build --filter='@remotion/ai-video-studio'
   build:
     name: Build Node ${{ matrix.node_version }} on ${{ matrix.os }}
-    runs-on: ${{ matrix.os }}
+    runs-on: self-hosted
     strategy:
       fail-fast: false
       matrix:
