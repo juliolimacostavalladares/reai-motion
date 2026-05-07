@@ -1,15 +1,12 @@
-import {Router, type Router as ExpressRouter} from 'express';
+import {Router as createRouter} from 'express';
 
-const router: ExpressRouter = Router();
+const router = createRouter();
 
-// TODO: Implement render routes
-// This will use @remotion/renderer to render the final video
-
-router.post('/:projectId', async (_req, res) => {
+router.post('/:projectId', (_req, res) => {
 	res.status(501).json({error: 'Render endpoint not yet implemented'});
 });
 
-router.get('/:projectId/status', async (_req, res) => {
+router.get('/:projectId/status', (_req, res) => {
 	res.status(501).json({error: 'Render status endpoint not yet implemented'});
 });
 

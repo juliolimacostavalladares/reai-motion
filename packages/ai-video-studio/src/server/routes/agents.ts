@@ -1,4 +1,4 @@
-import {Router, type Router as ExpressRouter} from 'express';
+import {Router as createRouter} from 'express';
 import type {AgentProgress} from '../../types';
 import {extractBrand} from '../../utils/brand-extractor';
 import {composeVideo} from '../../utils/composition-generator';
@@ -6,7 +6,7 @@ import {generateScript} from '../../utils/script-generator';
 import {generateStoryboard} from '../../utils/storyboard-generator';
 import {liveEvents} from '../index';
 
-const router: ExpressRouter = Router();
+const router = createRouter();
 
 // Extract brand from URL or logo
 router.post('/extract-brand', async (req, res) => {

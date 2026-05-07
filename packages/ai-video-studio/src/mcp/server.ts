@@ -163,6 +163,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 				if (!args || typeof args !== 'object') {
 					throw new Error('Invalid arguments');
 				}
+
 				const {url} = args as {url: string};
 				if (!url || typeof url !== 'string') {
 					throw new Error('url is required and must be a string');
@@ -190,6 +191,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 				if (!args || typeof args !== 'object') {
 					throw new Error('Invalid arguments');
 				}
+
 				const {brandKit, questionnaire} = args as {
 					brandKit: any;
 					questionnaire: any;
@@ -197,6 +199,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 				if (!brandKit) {
 					throw new Error('brandKit is required');
 				}
+
 				if (!questionnaire) {
 					throw new Error('questionnaire is required');
 				}
@@ -227,10 +230,12 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 				if (!args || typeof args !== 'object') {
 					throw new Error('Invalid arguments');
 				}
+
 				const {script, brandKit} = args as {script: any; brandKit: any};
 				if (!script) {
 					throw new Error('script is required');
 				}
+
 				if (!brandKit) {
 					throw new Error('brandKit is required');
 				}
@@ -261,6 +266,7 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 				if (!args || typeof args !== 'object') {
 					throw new Error('Invalid arguments');
 				}
+
 				const {storyboard, template, brandKit, projectId} = args as {
 					storyboard: any;
 					template: string;
@@ -270,12 +276,15 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 				if (!storyboard) {
 					throw new Error('storyboard is required');
 				}
+
 				if (!template) {
 					throw new Error('template is required');
 				}
+
 				if (!brandKit) {
 					throw new Error('brandKit is required');
 				}
+
 				if (!projectId) {
 					throw new Error('projectId is required');
 				}

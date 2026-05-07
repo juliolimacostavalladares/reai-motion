@@ -1,10 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
-import {Router, type Router as ExpressRouter} from 'express';
+import {Router as createRouter} from 'express';
 import {v4 as uuidv4} from 'uuid';
 import type {Project} from '../../types';
 
-const router: ExpressRouter = Router();
+const router = createRouter();
 const PROJECTS_DIR = path.join(
 	process.cwd(),
 	'.remotion-ai-studio',

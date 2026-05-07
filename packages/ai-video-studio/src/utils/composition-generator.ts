@@ -6,86 +6,6 @@ interface ProgressCallback {
 	(progress: Partial<AgentProgress>): void;
 }
 
-export async function composeVideo(
-	storyboard: Storyboard,
-	template: string,
-	brandKit: BrandKit,
-	projectId: string,
-	onProgress: ProgressCallback,
-): Promise<{compositionPath: string; previewUrl: string}> {
-	try {
-		onProgress({
-			progress: 10,
-			message: 'Preparing composition...',
-		});
-
-		const projectDir = path.join(
-			process.cwd(),
-			'.remotion-ai-studio',
-			'projects',
-			projectId,
-		);
-		await fs.mkdir(projectDir, {recursive: true});
-
-		onProgress({
-			progress: 30,
-			message: 'Generating Remotion code...',
-		});
-
-		// Generate composition code
-		const compositionCode = generateCompositionCode(
-			storyboard,
-			brandKit,
-			template,
-		);
-
-		onProgress({
-			progress: 60,
-			message: 'Saving composition file...',
-		});
-
-		// Save composition file
-		const compositionPath = path.join(projectDir, 'composition.tsx');
-		await fs.writeFile(compositionPath, compositionCode);
-
-		onProgress({
-			progress: 80,
-			message: 'Setting up preview...',
-		});
-
-		// Save config for preview
-		const configPath = path.join(projectDir, 'config.json');
-		await fs.writeFile(
-			configPath,
-			JSON.stringify(
-				{
-					template,
-					brandKit,
-					storyboard,
-					compositionPath,
-				},
-				null,
-				2,
-			),
-		);
-
-		onProgress({
-			progress: 95,
-			message: 'Finalizing...',
-		});
-
-		return {
-			compositionPath,
-			previewUrl: `/preview/${projectId}`,
-		};
-	} catch (error) {
-		console.error('Error composing video:', error);
-		throw new Error(
-			`Failed to compose video: ${error instanceof Error ? error.message : 'Unknown error'}`,
-		);
-	}
-}
-
 function generateCompositionCode(
 	storyboard: Storyboard,
 	brandKit: BrandKit,
@@ -151,4 +71,82 @@ export const registerComposition = () => {
   );
 };
 `;
+}
+
+export async function composeVideo(
+	storyboard: Storyboard,
+	brandKit: BrandKit,
+	projectId: string,
+	onProgress: ProgressCallback,
+): Promise<{compositionPath: string; previewUrl: string}> {
+	try {
+		onProgress({
+			progress: 10,
+			message: 'Preparing composition...',
+		});
+
+		const projectDir = path.join(
+			process.cwd(),
+			'.remotion-ai-studio',
+			'projects',
+			projectId,
+		);
+		await fs.mkdir(projectDir, {recursive: true});
+
+		onProgress({
+			progress: 30,
+			message: 'Generating Remotion code...',
+		});
+
+		// Generate composition code
+		const compositionCode = generateCompositionCode(
+			storyboard,
+			brandKit,
+			'default',
+		);
+
+		onProgress({
+			progress: 60,
+			message: 'Saving composition file...',
+		});
+
+		// Save composition file
+		const compositionPath = path.join(projectDir, 'composition.tsx');
+		await fs.writeFile(compositionPath, compositionCode);
+
+		onProgress({
+			progress: 80,
+			message: 'Setting up preview...',
+		});
+
+		// Save config for preview
+		const configPath = path.join(projectDir, 'config.json');
+		await fs.writeFile(
+			configPath,
+			JSON.stringify(
+				{
+					brandKit,
+					storyboard,
+					compositionPath,
+				},
+				null,
+				2,
+			),
+		);
+
+		onProgress({
+			progress: 95,
+			message: 'Finalizing...',
+		});
+
+		return {
+			compositionPath,
+			previewUrl: `/preview/${projectId}`,
+		};
+	} catch (error) {
+		console.error('Error composing video:', error);
+		throw new Error(
+			`Failed to compose video: ${error instanceof Error ? error.message : 'Unknown error'}`,
+		);
+	}
 }

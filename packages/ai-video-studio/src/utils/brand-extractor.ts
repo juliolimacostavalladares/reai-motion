@@ -6,79 +6,6 @@ interface ProgressCallback {
 	(progress: Partial<AgentProgress>): void;
 }
 
-export async function extractBrand(
-	url: string,
-	onProgress: ProgressCallback,
-): Promise<BrandKit> {
-	try {
-		onProgress({
-			progress: 10,
-			message: 'Fetching website...',
-		});
-
-		// Fetch website
-		const response = await axios.get(url, {timeout: 10000});
-		const html = response.data;
-
-		onProgress({
-			progress: 30,
-			message: 'Analyzing colors...',
-		});
-
-		// Parse HTML
-		const $ = cheerio.load(html);
-
-		// Extract colors from CSS
-		const colors = extractColorsFromCSS($);
-
-		onProgress({
-			progress: 60,
-			message: 'Extracting fonts...',
-		});
-
-		// Extract fonts
-		const fonts = extractFonts($);
-
-		onProgress({
-			progress: 80,
-			message: 'Analyzing tone of voice...',
-		});
-
-		// Extract text for tone analysis
-		const bodyText = $('body').text().substring(0, 1000);
-
-		// Simple tone analysis (in production, use LLM)
-		const tone = analyzeTone(bodyText);
-
-		onProgress({
-			progress: 95,
-			message: 'Finalizing brand kit...',
-		});
-
-		const brandKit: BrandKit = {
-			colors: {
-				primary: colors.primary || '#0066CC',
-				secondary: colors.secondary || '#FF6B35',
-				accent: colors.accent || '#F7B801',
-				background: colors.background || '#FFFFFF',
-				text: colors.text || '#000000',
-			},
-			fonts: {
-				heading: fonts.heading || 'Inter',
-				body: fonts.body || 'Open Sans',
-			},
-			tone,
-		};
-
-		return brandKit;
-	} catch (error) {
-		console.error('Error extracting brand:', error);
-		throw new Error(
-			`Failed to extract brand: ${error instanceof Error ? error.message : 'Unknown error'}`,
-		);
-	}
-}
-
 function extractColorsFromCSS(
 	$: cheerio.CheerioAPI,
 ): Record<string, string | undefined> {
@@ -166,4 +93,77 @@ function analyzeTone(text: string): string {
 	}
 
 	return tones.length > 0 ? tones.join(', ') : 'professional, modern';
+}
+
+export async function extractBrand(
+	url: string,
+	onProgress: ProgressCallback,
+): Promise<BrandKit> {
+	try {
+		onProgress({
+			progress: 10,
+			message: 'Fetching website...',
+		});
+
+		// Fetch website
+		const response = await axios.get(url, {timeout: 10000});
+		const html = response.data;
+
+		onProgress({
+			progress: 30,
+			message: 'Analyzing colors...',
+		});
+
+		// Parse HTML
+		const $ = cheerio.load(html);
+
+		// Extract colors from CSS
+		const colors = extractColorsFromCSS($);
+
+		onProgress({
+			progress: 60,
+			message: 'Extracting fonts...',
+		});
+
+		// Extract fonts
+		const fonts = extractFonts($);
+
+		onProgress({
+			progress: 80,
+			message: 'Analyzing tone of voice...',
+		});
+
+		// Extract text for tone analysis
+		const bodyText = $('body').text().substring(0, 1000);
+
+		// Simple tone analysis (in production, use LLM)
+		const tone = analyzeTone(bodyText);
+
+		onProgress({
+			progress: 95,
+			message: 'Finalizing brand kit...',
+		});
+
+		const brandKit: BrandKit = {
+			colors: {
+				primary: colors.primary || '#0066CC',
+				secondary: colors.secondary || '#FF6B35',
+				accent: colors.accent || '#F7B801',
+				background: colors.background || '#FFFFFF',
+				text: colors.text || '#000000',
+			},
+			fonts: {
+				heading: fonts.heading || 'Inter',
+				body: fonts.body || 'Open Sans',
+			},
+			tone,
+		};
+
+		return brandKit;
+	} catch (error) {
+		console.error('Error extracting brand:', error);
+		throw new Error(
+			`Failed to extract brand: ${error instanceof Error ? error.message : 'Unknown error'}`,
+		);
+	}
 }
