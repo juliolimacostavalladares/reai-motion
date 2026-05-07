@@ -124,6 +124,7 @@
 			"@vitest/browser-playwright": "4.0.9",
 			"playwright": "1.55.1",
 			"vitest": "4.0.9",
+			"typescript": "5.9.3",
 			"@typescript/native-preview": "7.0.0-dev.20260217.1"
 		}
 	}
