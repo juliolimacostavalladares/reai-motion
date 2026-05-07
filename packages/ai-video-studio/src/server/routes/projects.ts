@@ -1,11 +1,15 @@
-import {Router} from 'express';
-import {v4 as uuidv4} from 'uuid';
 import fs from 'fs/promises';
 import path from 'path';
+import {Router} from 'express';
+import {v4 as uuidv4} from 'uuid';
 import type {Project} from '../../types';
 
 const router = Router();
-const PROJECTS_DIR = path.join(process.cwd(), '.remotion-ai-studio', 'projects');
+const PROJECTS_DIR = path.join(
+	process.cwd(),
+	'.remotion-ai-studio',
+	'projects',
+);
 
 // Ensure projects directory exists
 async function ensureProjectsDir() {

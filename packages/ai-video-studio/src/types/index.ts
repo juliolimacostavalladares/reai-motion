@@ -72,7 +72,13 @@ export interface Project {
 	name: string;
 	createdAt: string;
 	updatedAt: string;
-	status: 'draft' | 'generating' | 'ready' | 'rendering' | 'completed' | 'error';
+	status:
+		| 'draft'
+		| 'generating'
+		| 'ready'
+		| 'rendering'
+		| 'completed'
+		| 'error';
 	currentStep: 'brand' | 'script' | 'storyboard' | 'preview' | 'render';
 	brandKit?: BrandKit;
 	script?: VideoScript;
@@ -83,7 +89,11 @@ export interface Project {
 }
 
 export interface AgentProgress {
-	phase: 'brand-extraction' | 'script-generation' | 'storyboard-generation' | 'video-composition';
+	phase:
+		| 'brand-extraction'
+		| 'script-generation'
+		| 'storyboard-generation'
+		| 'video-composition';
 	progress: number; // 0-100
 	message: string;
 	status: 'idle' | 'running' | 'completed' | 'error';

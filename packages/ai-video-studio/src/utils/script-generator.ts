@@ -1,4 +1,9 @@
-import type {BrandKit, VideoScript, Questionnaire, AgentProgress} from '../types';
+import type {
+	BrandKit,
+	VideoScript,
+	Questionnaire,
+	AgentProgress,
+} from '../types';
 
 interface ProgressCallback {
 	(progress: Partial<AgentProgress>): void;
@@ -15,13 +20,8 @@ export async function generateScript(
 			message: 'Analyzing questionnaire...',
 		});
 
-		const {
-			videoGoal,
-			targetAudience,
-			duration,
-			mainMessage,
-			callToAction,
-		} = questionnaire;
+		const {videoGoal, targetAudience, duration, mainMessage, callToAction} =
+			questionnaire;
 
 		onProgress({
 			progress: 30,

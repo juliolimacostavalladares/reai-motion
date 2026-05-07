@@ -1,10 +1,10 @@
-import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import {projectRoutes} from './routes/projects';
-import {agentRoutes} from './routes/agents';
-import {renderRoutes} from './routes/render';
+import express from 'express';
 import {setupLiveEvents} from './live-events';
+import {agentRoutes} from './routes/agents';
+import {projectRoutes} from './routes/projects';
+import {renderRoutes} from './routes/render';
 
 dotenv.config();
 
@@ -51,7 +51,9 @@ app.use(
 
 app.listen(PORT, () => {
 	console.log(`🚀 AI Video Studio Backend running on http://localhost:${PORT}`);
-	console.log(`📡 Live events available at http://localhost:${PORT}/api/events`);
+	console.log(
+		`📡 Live events available at http://localhost:${PORT}/api/events`,
+	);
 	console.log(`🎬 Ready to create videos!`);
 });
 

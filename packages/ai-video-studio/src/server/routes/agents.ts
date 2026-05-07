@@ -1,10 +1,10 @@
 import {Router} from 'express';
+import type {AgentProgress} from '../../types';
 import {extractBrand} from '../../utils/brand-extractor';
+import {composeVideo} from '../../utils/composition-generator';
 import {generateScript} from '../../utils/script-generator';
 import {generateStoryboard} from '../../utils/storyboard-generator';
-import {composeVideo} from '../../utils/composition-generator';
 import {liveEvents} from '../index';
-import type {AgentProgress} from '../../types';
 
 const router = Router();
 
@@ -126,11 +126,7 @@ router.post('/generate-storyboard', async (req, res) => {
 			status: 'running',
 		});
 
-		const storyboard = await generateStoryboard(
-			script,
-			brandKit,
-			sendProgress,
-		);
+		const storyboard = await generateStoryboard(script, brandKit, sendProgress);
 
 		sendProgress({
 			phase: 'storyboard-generation',

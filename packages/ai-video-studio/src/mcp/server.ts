@@ -12,9 +12,9 @@ import {
 	ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
 import {extractBrand} from '../utils/brand-extractor.js';
+import {composeVideo} from '../utils/composition-generator.js';
 import {generateScript} from '../utils/script-generator.js';
 import {generateStoryboard} from '../utils/storyboard-generator.js';
-import {composeVideo} from '../utils/composition-generator.js';
 
 const server = new Server(
 	{
