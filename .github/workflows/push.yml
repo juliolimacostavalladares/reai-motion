@@ -230,6 +230,12 @@ jobs:
         timeout-minutes: 10
         run: |
           bun run stylecheck
+      - name: Lint AI Video Studio
+        run: bun run lint --filter='@remotion/ai-video-studio'
+      - name: Test AI Video Studio
+        run: bun run test --filter='@remotion/ai-video-studio'
+      - name: Build AI Video Studio
+        run: bun run build --filter='@remotion/ai-video-studio'
   build:
     name: Build Node ${{ matrix.node_version }} on ${{ matrix.os }}
     runs-on: ${{ matrix.os }}

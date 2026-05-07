@@ -122,6 +122,25 @@
 			"inputs": ["src/**", "public/**", "remotion.config.*", "package.json", "tsconfig.json"],
 			"outputs": ["build"],
 			"outputLogs": "new-only"
+		},
+		"@remotion/ai-video-studio#lint": {
+			"dependsOn": [
+				"@remotion/eslint-config-internal#make",
+				"@remotion/eslint-config#make",
+				"^make"
+			],
+			"outputs": [],
+			"outputLogs": "new-only"
+		},
+		"@remotion/ai-video-studio#test": {
+			"dependsOn": ["^make", "make"],
+			"outputs": [],
+			"outputLogs": "new-only"
+		},
+		"@remotion/ai-video-studio#make": {
+			"dependsOn": ["^make"],
+			"outputs": ["dist"],
+			"outputLogs": "new-only"
 		}
 	}
 }

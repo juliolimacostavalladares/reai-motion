@@ -1,0 +1,11 @@
+{
+	"mcpServers": {
+		"remotion-ai-video-studio": {
+			"command": "bun",
+			"args": [
+				"packages/ai-video-studio/src/mcp/server.ts"
+			],
+			"cwd": "C:\\Users\\julio\\Documents\\reai-motion"
+		}
+	}
+}
