@@ -160,13 +160,21 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 	try {
 		switch (name) {
 			case 'extract_brand': {
+				if (!args || typeof args !== 'object') {
+					throw new Error('Invalid arguments');
+				}
+				const {url} = args as {url: string};
+				if (!url || typeof url !== 'string') {
+					throw new Error('url is required and must be a string');
+				}
+
 				const progressCallback = (progress: any) => {
 					console.error(
 						`[extract_brand] ${progress.progress}% - ${progress.message}`,
 					);
 				};
 
-				const brandKit = await extractBrand(args.url, progressCallback);
+				const brandKit = await extractBrand(url, progressCallback);
 
 				return {
 					content: [
@@ -179,6 +187,20 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 			}
 
 			case 'generate_script': {
+				if (!args || typeof args !== 'object') {
+					throw new Error('Invalid arguments');
+				}
+				const {brandKit, questionnaire} = args as {
+					brandKit: any;
+					questionnaire: any;
+				};
+				if (!brandKit) {
+					throw new Error('brandKit is required');
+				}
+				if (!questionnaire) {
+					throw new Error('questionnaire is required');
+				}
+
 				const progressCallback = (progress: any) => {
 					console.error(
 						`[generate_script] ${progress.progress}% - ${progress.message}`,
@@ -186,8 +208,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 				};
 
 				const script = await generateScript(
-					args.brandKit,
-					args.questionnaire,
+					brandKit,
+					questionnaire,
 					progressCallback,
 				);
 
@@ -202,6 +224,17 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 			}
 
 			case 'generate_storyboard': {
+				if (!args || typeof args !== 'object') {
+					throw new Error('Invalid arguments');
+				}
+				const {script, brandKit} = args as {script: any; brandKit: any};
+				if (!script) {
+					throw new Error('script is required');
+				}
+				if (!brandKit) {
+					throw new Error('brandKit is required');
+				}
+
 				const progressCallback = (progress: any) => {
 					console.error(
 						`[generate_storyboard] ${progress.progress}% - ${progress.message}`,
@@ -209,8 +242,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 				};
 
 				const storyboard = await generateStoryboard(
-					args.script,
-					args.brandKit,
+					script,
+					brandKit,
 					progressCallback,
 				);
 
@@ -225,6 +258,28 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 			}
 
 			case 'compose_video': {
+				if (!args || typeof args !== 'object') {
+					throw new Error('Invalid arguments');
+				}
+				const {storyboard, template, brandKit, projectId} = args as {
+					storyboard: any;
+					template: string;
+					brandKit: any;
+					projectId: string;
+				};
+				if (!storyboard) {
+					throw new Error('storyboard is required');
+				}
+				if (!template) {
+					throw new Error('template is required');
+				}
+				if (!brandKit) {
+					throw new Error('brandKit is required');
+				}
+				if (!projectId) {
+					throw new Error('projectId is required');
+				}
+
 				const progressCallback = (progress: any) => {
 					console.error(
 						`[compose_video] ${progress.progress}% - ${progress.message}`,
@@ -232,10 +287,10 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 				};
 
 				const result = await composeVideo(
-					args.storyboard,
-					args.template,
-					args.brandKit,
-					args.projectId,
+					storyboard,
+					template,
+					brandKit,
+					projectId,
 					progressCallback,
 				);
 

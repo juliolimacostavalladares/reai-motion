@@ -26,7 +26,7 @@ app.use('/api/render', renderRoutes);
 app.get('/api/events', liveEvents.handler);
 
 // Health check
-app.get('/api/health', (req, res) => {
+app.get('/api/health', (_req, res) => {
 	res.json({
 		status: 'ok',
 		timestamp: new Date().toISOString(),
@@ -38,9 +38,9 @@ app.get('/api/health', (req, res) => {
 app.use(
 	(
 		err: Error,
-		req: express.Request,
+		_req: express.Request,
 		res: express.Response,
-		next: express.NextFunction,
+		_next: express.NextFunction,
 	) => {
 		console.error('Error:', err);
 		res.status(500).json({

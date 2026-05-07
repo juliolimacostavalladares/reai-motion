@@ -1,10 +1,10 @@
 import fs from 'fs/promises';
 import path from 'path';
-import {Router} from 'express';
+import {Router, type Router as ExpressRouter} from 'express';
 import {v4 as uuidv4} from 'uuid';
 import type {Project} from '../../types';
 
-const router = Router();
+const router: ExpressRouter = Router();
 const PROJECTS_DIR = path.join(
 	process.cwd(),
 	'.remotion-ai-studio',
@@ -17,7 +17,7 @@ async function ensureProjectsDir() {
 }
 
 // Get all projects
-router.get('/', async (req, res) => {
+router.get('/', async (_req, res) => {
 	try {
 		await ensureProjectsDir();
 		const files = await fs.readdir(PROJECTS_DIR);

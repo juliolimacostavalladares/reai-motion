@@ -89,7 +89,7 @@ export async function composeVideo(
 function generateCompositionCode(
 	storyboard: Storyboard,
 	brandKit: BrandKit,
-	template: string,
+	_template: string,
 ): string {
 	const scenesCode = storyboard.scenes
 		.map(

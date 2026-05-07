@@ -20,8 +20,13 @@ export async function generateScript(
 			message: 'Analyzing questionnaire...',
 		});
 
-		const {videoGoal, targetAudience, duration, mainMessage, callToAction} =
-			questionnaire;
+		const {
+			videoGoal: _videoGoal,
+			targetAudience: _targetAudience,
+			duration,
+			mainMessage,
+			callToAction,
+		} = questionnaire;
 
 		onProgress({
 			progress: 30,
@@ -39,7 +44,7 @@ export async function generateScript(
 
 		// Generate scenes
 		const scenes = generateScenes(
-			videoGoal,
+			questionnaire.videoGoal,
 			mainMessage,
 			callToAction,
 			numScenes,
@@ -69,12 +74,12 @@ export async function generateScript(
 }
 
 function generateScenes(
-	videoGoal: string,
+	_videoGoal: string,
 	mainMessage: string,
 	callToAction: string | undefined,
 	numScenes: number,
 	sceneDuration: number,
-	tone: string,
+	_tone: string,
 ): any[] {
 	const scenes = [];
 

@@ -8,11 +8,11 @@
 	"main": "dist/index.js",
 	"sideEffects": false,
 	"scripts": {
-		"dev": "concurrently \"bun run dev:backend\" \"bun run dev:frontend\"",
+		"dev": "tsx watch src/server/index.ts",
 		"dev:backend": "tsx watch src/server/index.ts",
-		"dev:frontend": "cd web-ui && bun run dev",
-		"build": "tsgo -d && bun run build:frontend",
-		"build:frontend": "cd web-ui && bun run build",
+		"dev:frontend": "echo 'Frontend not yet implemented'",
+		"build": "tsgo -d",
+		"build:frontend": "echo 'Frontend not yet implemented'",
 		"lint": "eslint src",
 		"formatting": "oxfmt src --check",
 		"format": "oxfmt src",
@@ -39,6 +39,7 @@
 	"devDependencies": {
 		"@types/express": "^4.17.21",
 		"@types/cors": "^2.8.17",
+		"@types/uuid": "^9.0.7",
 		"@types/node": "catalog:",
 		"@types/bun": "catalog:",
 		"@remotion/eslint-config-internal": "workspace:*",

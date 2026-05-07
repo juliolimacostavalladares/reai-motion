@@ -1,6 +1,5 @@
 import axios from 'axios';
-import cheerio from 'cheerio';
-import ColorThief from 'colorthief';
+import * as cheerio from 'cheerio';
 import type {BrandKit, AgentProgress} from '../types';
 
 interface ProgressCallback {
@@ -89,7 +88,7 @@ function extractColorsFromCSS(
 	const styleElements = $('style');
 	let cssText = '';
 
-	styleElements.each((i, elem) => {
+	styleElements.each((_i: number, elem: cheerio.Element) => {
 		cssText += $(elem).text();
 	});
 
